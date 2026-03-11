@@ -34,29 +34,31 @@ def services():
     # if user not registered redirect
     if "name" not in session:
         return redirect(url_for("home"))
+    return render_template("services.html")
 
-    message = ""
 
-    if request.method == "POST":
+if __name__ == "__main__":
+    app.run()
+   # message = ""
 
-        service = request.form.get("service")
+    #if request.method == "POST":
 
-        name = session.get("name")
-        phone = session.get("phone")
-        email = session.get("email")
+     #   service = request.form.get("service")
+
+      #email = session.get("email")
 
         # Save data to file
-        with open("data.txt", "a", encoding="utf-8") as f:
-            f.write(f"{name} | {phone} | {email} | {service}\n")
+       # with open("data.txt", "a", encoding="utf-8") as f:
+        #    f.write(f"{name} | {phone} | {email} | {service}\n")
 
-        message = "✅ Thank you! We will contact you soon via WhatsApp."
+        #message = "✅ Thank you! We will contact you soon via WhatsApp."
 
-    return render_template("services.html", message=message)
+    #return render_template("services.html", message=message)
 
 
 # -------------------------------
 # Run Server
 # -------------------------------
 
-if __name__ == "__main__":
-    app.run(debug=True)
+#if __name__ == "__main__":
+   # app.run(debug=True)
