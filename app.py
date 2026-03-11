@@ -39,26 +39,29 @@ def services():
 
 if __name__ == "__main__":
     app.run()
-   # message = ""
+    message = ""
 
-    #if request.method == "POST":
+    if request.method == "POST":
 
-     #   service = request.form.get("service")
+        service = request.form.get("service")
 
-      #email = session.get("email")
+       email = session.get("email")
 
-        # Save data to file
-       # with open("data.txt", "a", encoding="utf-8") as f:
-        #    f.write(f"{name} | {phone} | {email} | {service}\n")
+         #Save data to file
+       with open("data.txt", "a", encoding="utf-8") as f:
+            f.write(f"{name} | {phone} | {email} | {service}\n")
 
-        #message = "✅ Thank you! We will contact you soon via WhatsApp."
+        message = "✅ Thank you! We will contact you soon via WhatsApp."
 
-    #return render_template("services.html", message=message)
+    return render_template("services.html", message=message)
 
 
 # -------------------------------
 # Run Server
 # -------------------------------
 
-#if __name__ == "__main__":
-   # app.run(debug=True)
+import os
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
