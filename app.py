@@ -4,38 +4,27 @@ app = Flask(__name__)
 app.secret_key = "anheyacad_secret_key"
 
 
-# -------------------------------
 # Register Page
-# -------------------------------
-
 @app.route("/", methods=["GET", "POST"])
 def home():
 
     if request.method == "POST":
 
-        # Get user details
         session["name"] = request.form.get("name")
         session["phone"] = request.form.get("phone")
         session["email"] = request.form.get("email")
 
-        # Go to services page
         return redirect(url_for("services"))
 
     return render_template("index.html")
 
 
-# -------------------------------
 # Services Page
-# -------------------------------
-
 @app.route("/services", methods=["GET", "POST"])
 def services():
 
-    # if user not registered redirect
     if "name" not in session:
         return redirect(url_for("home"))
-    return render_template("services.html")
-
 
     message = ""
 
@@ -43,9 +32,11 @@ def services():
 
         service = request.form.get("service")
 
+        name = session.get("name")
+        phone = session.get("phone")
         email = session.get("email")
 
-        # Save data to file
+        # Save data
         with open("data.txt", "a", encoding="utf-8") as f:
             f.write(f"{name} | {phone} | {email} | {service}\n")
 
@@ -53,10 +44,6 @@ def services():
 
     return render_template("services.html", message=message)
 
-
-# -------------------------------
-# Run Server
-# -------------------------------
 
 if __name__ == "__main__":
     app.run(debug=True)
