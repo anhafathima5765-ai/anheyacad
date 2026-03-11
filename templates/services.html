@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -24,11 +25,6 @@ border-radius:10px;
 box-shadow:0 0 20px rgba(0,0,0,0.2);
 }
 
-.btn-service{
-width:100%;
-margin-bottom:15px;
-}
-
 #message{
 display:none;
 }
@@ -43,7 +39,7 @@ display:none;
 
 <h2 class="text-center mb-4">Select Resume Service</h2>
 
-<!-- Service checkboxes -->
+<form method="POST" onsubmit="prepareService()">
 
 <div class="form-check">
 <input class="form-check-input" type="checkbox" value="ATS Resume ₹599" id="ats">
@@ -60,49 +56,59 @@ display:none;
 <label class="form-check-label">Cover Letter ₹299</label>
 </div>
 
+<input type="hidden" name="service" id="serviceInput">
+
 <br>
 
-<button class="btn btn-primary w-100" onclick="submitService()">
+<button type="submit" class="btn btn-primary w-100">
 Submit Selection
 </button>
 
+</form>
+
+{% if message %}
+
 <hr>
 
-<div id="message" class="text-center">
+<div id="message" class="text-center" style="display:block">
 
 <p class="text-success">
-
 ✅ Thank you! We will contact you shortly via WhatsApp.
-
 </p>
 
 <br>
 
 <a id="waLink" href="#" target="_blank">
-
 <button class="btn btn-success">
-
 Contact on WhatsApp
-
 </button>
-
 </a>
 
 <br><br>
 
 <button class="btn btn-secondary" onclick="refreshPage()">
-
 New Request
-
 </button>
-
-</div>
 
 </div>
 
 <script>
 
-function submitService(){
+let message="{{message}}";
+
+let wa="https://wa.me/918281495475?text="+encodeURIComponent(message);
+
+document.getElementById("waLink").href=wa;
+
+</script>
+
+{% endif %}
+
+</div>
+
+<script>
+
+function prepareService(){
 
 let services=[];
 
@@ -117,21 +123,16 @@ services.push("Cover Letter ₹299");
 
 if(services.length==0){
 alert("Please select at least one service");
+event.preventDefault();
 return;
 }
 
-document.getElementById("message").style.display="block";
-
-let message="Hi I want these services: "+services.join(", ");
-
-let wa="https://wa.me/918281495475?text="+encodeURIComponent(message);
-
-document.getElementById("waLink").href=wa;
+document.getElementById("serviceInput").value=services.join(", ");
 
 }
 
 function refreshPage(){
-location.reload();
+location.href="/services";
 }
 
 </script>
