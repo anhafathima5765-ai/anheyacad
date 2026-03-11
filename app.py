@@ -37,18 +37,16 @@ def services():
     return render_template("services.html")
 
 
-if __name__ == "__main__":
-    app.run()
     message = ""
 
     if request.method == "POST":
 
         service = request.form.get("service")
 
-       email = session.get("email")
+        email = session.get("email")
 
-         #Save data to file
-       with open("data.txt", "a", encoding="utf-8") as f:
+        # Save data to file
+        with open("data.txt", "a", encoding="utf-8") as f:
             f.write(f"{name} | {phone} | {email} | {service}\n")
 
         message = "✅ Thank you! We will contact you soon via WhatsApp."
@@ -60,9 +58,5 @@ if __name__ == "__main__":
 # Run Server
 # -------------------------------
 
-import os
-
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 3000))
-    app.run(host="0.0.0.0", port=port)
-
+    app.run(debug=True)
